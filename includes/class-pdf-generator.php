@@ -284,17 +284,17 @@ class Cotizador_PDF_Generator {
                     <td colspan="4" style="text-align: right;"><strong>TOTAL:</strong></td>
                     <td><strong>$<?php echo number_format($subtotal_general, 0, ',', '.'); ?></strong></td>
                 </tr>
-                <?php if ($aplicar_descuento === 'si'): 
+                <?php if ($aplicar_descuento === 'si'):
                     $monto_descuento = $subtotal_general * ($descuento_porcentaje / 100);
                     $total_con_descuento = $subtotal_general - $monto_descuento;
                 ?>
-                <tr style="background: #d4edda;">
+                <tr style="background-color: #d4edda;">
                     <td colspan="4" style="text-align: right; color: #155724;"><strong>Descuento Transferencia (<?php echo $descuento_porcentaje; ?>%):</strong></td>
                     <td style="color: #155724;"><strong>-$<?php echo number_format($monto_descuento, 0, ',', '.'); ?></strong></td>
                 </tr>
-                <tr style="background: #28a745; color: white;">
-                    <td colspan="4" style="text-align: right;"><strong>TOTAL CON DESCUENTO:</strong></td>
-                    <td><strong>$<?php echo number_format($total_con_descuento, 0, ',', '.'); ?></strong></td>
+                <tr style="background-color: #28a745;">
+                    <td colspan="4" style="text-align: right; color: #ffffff; font-size: 12pt;"><strong>TOTAL CON DESCUENTO:</strong></td>
+                    <td style="color: #ffffff; font-size: 12pt;"><strong>$<?php echo number_format($total_con_descuento, 0, ',', '.'); ?></strong></td>
                 </tr>
                 <?php endif; ?>
             </table>
