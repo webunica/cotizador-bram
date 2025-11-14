@@ -29,6 +29,7 @@ class Cotizador_System {
             cliente_rut varchar(50),
             productos longtext NOT NULL,
             total decimal(10,2),
+            aplicar_descuento varchar(3) DEFAULT 'no',
             estado varchar(50) DEFAULT 'pendiente',
             fecha_creacion datetime DEFAULT CURRENT_TIMESTAMP,
             fecha_expiracion datetime,
@@ -165,10 +166,11 @@ class Cotizador_System {
                 'cliente_rut' => $datos_cliente['rut'],
                 'productos' => json_encode($productos),
                 'total' => $total,
+                'aplicar_descuento' => $aplicar_descuento,
                 'fecha_expiracion' => date('Y-m-d H:i:s', strtotime('+' . $dias_validez . ' days')),
-                'notas' => 'Descuento: ' . $aplicar_descuento . '. ' . $datos_cliente['mensaje']
+                'notas' => $datos_cliente['mensaje']
             ),
-            array('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%f', '%s', '%s')
+            array('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%f', '%s', '%s', '%s')
         );
         
         // Generar PDF con información completa de descuento

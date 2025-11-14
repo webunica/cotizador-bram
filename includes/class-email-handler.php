@@ -272,23 +272,24 @@ class Cotizador_Email_Handler {
                             <?php endif; ?>
                         </div>
                     <?php endforeach; ?>
-                    
-                    <?php 
-                    $mostrar_descuento = get_option('cotizador_mostrar_descuento', '1');
+
+                    <?php
+                    // Obtener si el usuario aplicó descuento desde la BD
+                    $aplicar_descuento = isset($cotizacion->aplicar_descuento) ? $cotizacion->aplicar_descuento : 'no';
                     $descuento_transferencia = floatval(get_option('cotizador_descuento_transferencia', 4));
-                    
+
                     // Calcular totales (SIN sumar IVA, ya está incluido en los precios)
                     $total = floatval($cotizacion->total);
                     $monto_descuento = $total * ($descuento_transferencia / 100);
                     $total_con_descuento = $total - $monto_descuento;
                     ?>
-                    
+
                     <table style="width: 100%; margin: 20px 0; border-collapse: collapse;">
                         <tr style="background: #f5f5f5;">
                             <td style="text-align: right; padding: 12px; font-size: 18px;"><strong>Total:</strong></td>
                             <td style="text-align: right; padding: 12px; font-size: 18px; width: 150px;"><strong>$<?php echo number_format($total, 0, ',', '.'); ?></strong></td>
                         </tr>
-                        <?php if ($mostrar_descuento === '1'): ?>
+                        <?php if ($aplicar_descuento === 'si'): ?>
                         <tr style="background: #d4edda;">
                             <td style="text-align: right; padding: 12px; font-size: 16px; color: #155724;">
                                 <strong>Descuento Transferencia (<?php echo $descuento_transferencia; ?>%):</strong>
@@ -307,8 +308,8 @@ class Cotizador_Email_Handler {
                         </tr>
                         <?php endif; ?>
                     </table>
-                    
-                    <?php if ($mostrar_descuento === '1'): 
+
+                    <?php if ($aplicar_descuento === 'si'):
                         $banco_nombre = get_option('cotizador_banco_nombre', '');
                         $banco_tipo_cuenta = get_option('cotizador_banco_tipo_cuenta', '');
                         $banco_numero = get_option('cotizador_banco_numero', '');
@@ -730,14 +731,15 @@ class Cotizador_Email_Handler {
                             <?php endif; ?>
                             <tr class="total-row">
                                 <td colspan="4" style="text-align: right;">TOTAL:</td>
-                                <td style="text-align: right;">$<?php 
+                                <td style="text-align: right;">$<?php
                                     $total_admin = floatval($cotizacion->total);
                                     echo number_format($total_admin, 0, ',', '.');
                                 ?></td>
                             </tr>
-                            <?php 
-                            $mostrar_descuento = get_option('cotizador_mostrar_descuento', '1');
-                            if ($mostrar_descuento === '1'): 
+                            <?php
+                            // Obtener si el usuario aplicó descuento desde la BD
+                            $aplicar_descuento_admin = isset($cotizacion->aplicar_descuento) ? $cotizacion->aplicar_descuento : 'no';
+                            if ($aplicar_descuento_admin === 'si'):
                                 $descuento_transferencia = get_option('cotizador_descuento_transferencia', 4);
                                 $monto_descuento = $total_admin * ($descuento_transferencia / 100);
                                 $total_con_descuento = $total_admin - $monto_descuento;
