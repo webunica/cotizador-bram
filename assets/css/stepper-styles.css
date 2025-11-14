@@ -1,0 +1,504 @@
+/* ===================================
+   SISTEMA MULTIPASO (WIZARD/STEPPER)
+   =================================== */
+
+/* Contenedor del Stepper */
+.cotizador-stepper {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 24px 20px !important;
+    background: linear-gradient(to bottom, #f8f9fb 0%, #ffffff 100%) !important;
+    border-bottom: 2px solid var(--gris-borde) !important;
+    position: relative !important;
+}
+
+/* Item del Step */
+.step-item {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    position: relative !important;
+    z-index: 2 !important;
+}
+
+/* Círculo del Step */
+.step-circle {
+    width: 50px !important;
+    height: 50px !important;
+    border-radius: 50% !important;
+    background: var(--gris-fondo) !important;
+    border: 3px solid var(--gris-borde) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    position: relative !important;
+    transition: all 0.3s ease !important;
+}
+
+.step-circle svg {
+    width: 24px !important;
+    height: 24px !important;
+    stroke: var(--texto-secundario) !important;
+    opacity: 0 !important;
+    transition: all 0.3s ease !important;
+}
+
+.step-circle .step-number {
+    position: absolute !important;
+    font-size: 18px !important;
+    font-weight: 700 !important;
+    color: var(--texto-secundario) !important;
+    transition: all 0.3s ease !important;
+}
+
+/* Step Activo */
+.step-item.active .step-circle {
+    background: var(--azul-corporativo) !important;
+    border-color: var(--azul-corporativo) !important;
+    box-shadow: 0 0 0 4px rgba(26, 58, 82, 0.1) !important;
+}
+
+.step-item.active .step-circle svg {
+    opacity: 1 !important;
+    stroke: var(--blanco) !important;
+}
+
+.step-item.active .step-circle .step-number {
+    opacity: 0 !important;
+}
+
+.step-item.active .step-label .step-title {
+    color: var(--azul-corporativo) !important;
+    font-weight: 700 !important;
+}
+
+/* Step Completado */
+.step-item.completed .step-circle {
+    background: #28a745 !important;
+    border-color: #28a745 !important;
+}
+
+.step-item.completed .step-circle svg {
+    opacity: 1 !important;
+    stroke: var(--blanco) !important;
+}
+
+.step-item.completed .step-circle .step-number {
+    opacity: 0 !important;
+}
+
+/* Labels del Step */
+.step-label {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 2px !important;
+}
+
+.step-title {
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    color: var(--texto-principal) !important;
+    transition: all 0.3s ease !important;
+}
+
+.step-subtitle {
+    font-size: 12px !important;
+    color: var(--texto-secundario) !important;
+}
+
+/* Conector entre steps */
+.step-connector {
+    flex: 0 0 80px !important;
+    height: 3px !important;
+    background: var(--gris-borde) !important;
+    position: relative !important;
+    overflow: hidden !important;
+    border-radius: 2px !important;
+}
+
+.step-connector::before {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    height: 100% !important;
+    width: 0% !important;
+    background: var(--azul-corporativo) !important;
+    transition: width 0.4s ease !important;
+}
+
+/* Cuando el step 2 está activo, llenar el conector */
+.step-item[data-step="2"].active ~ .step-item[data-step="1"] + .step-connector::before,
+.step-item[data-step="2"].active + .step-connector::before,
+.step-item[data-step="1"] + .step-connector:has(~ .step-item[data-step="2"].active)::before {
+    width: 100% !important;
+}
+
+/* Header del Step */
+.step-header {
+    margin-bottom: 24px !important;
+    padding-bottom: 16px !important;
+    border-bottom: 2px solid var(--gris-borde) !important;
+}
+
+.step-header h3 {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    margin: 0 0 8px 0 !important;
+    font-size: 20px !important;
+    color: var(--azul-corporativo) !important;
+    border: none !important;
+    padding: 0 !important;
+}
+
+.step-header h3 svg {
+    width: 24px !important;
+    height: 24px !important;
+    flex-shrink: 0 !important;
+}
+
+.step-header p {
+    margin: 0 !important;
+    color: var(--texto-secundario) !important;
+    font-size: 14px !important;
+}
+
+/* Contenido del Step */
+.cotizador-step-content {
+    display: none !important;
+}
+
+.cotizador-step-content.active {
+    display: block !important;
+    animation: fadeIn 0.3s ease !important;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0 !important;
+        transform: translateY(10px) !important;
+    }
+    to {
+        opacity: 1 !important;
+        transform: translateY(0) !important;
+    }
+}
+
+/* Acciones del Step (botones) */
+.step-actions {
+    display: flex !important;
+    gap: 12px !important;
+    margin-top: 32px !important;
+    padding-top: 24px !important;
+    border-top: 2px solid var(--gris-borde) !important;
+}
+
+.step-actions button {
+    flex: 1 !important;
+}
+
+/* Resumen de Productos en Paso 2 */
+.resumen-productos-paso2 {
+    background: var(--gris-fondo) !important;
+    border: 2px solid var(--gris-borde) !important;
+    border-radius: 8px !important;
+    padding: 20px !important;
+    margin-bottom: 24px !important;
+}
+
+.resumen-header {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    margin-bottom: 16px !important;
+    padding-bottom: 12px !important;
+    border-bottom: 2px solid var(--gris-borde) !important;
+}
+
+.resumen-header h4 {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    margin: 0 !important;
+    font-size: 16px !important;
+    color: var(--azul-corporativo) !important;
+    font-weight: 600 !important;
+}
+
+.resumen-header h4 svg {
+    width: 18px !important;
+    height: 18px !important;
+}
+
+.btn-editar-productos {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    padding: 8px 16px !important;
+    background: var(--blanco) !important;
+    border: 1px solid var(--azul-corporativo) !important;
+    border-radius: 4px !important;
+    color: var(--azul-corporativo) !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+}
+
+.btn-editar-productos:hover {
+    background: var(--azul-corporativo) !important;
+    color: var(--blanco) !important;
+}
+
+.btn-editar-productos svg {
+    width: 16px !important;
+    height: 16px !important;
+}
+
+/* Lista de resumen de productos */
+.resumen-productos-lista {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+}
+
+.resumen-producto-item {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 10px !important;
+    background: var(--blanco) !important;
+    border-radius: 4px !important;
+    border: 1px solid var(--gris-borde) !important;
+}
+
+.resumen-producto-nombre {
+    flex: 1 !important;
+    font-size: 14px !important;
+    color: var(--texto-principal) !important;
+    font-weight: 500 !important;
+}
+
+.resumen-producto-cantidad {
+    font-size: 13px !important;
+    color: var(--texto-secundario) !important;
+    margin: 0 12px !important;
+}
+
+.resumen-producto-precio {
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    color: var(--azul-corporativo) !important;
+}
+
+/* Total del resumen */
+.resumen-total {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 16px !important;
+    margin-top: 12px !important;
+    background: var(--azul-corporativo) !important;
+    color: var(--blanco) !important;
+    border-radius: 6px !important;
+    font-size: 18px !important;
+    font-weight: 700 !important;
+}
+
+/* Texto vacío mejorado */
+.texto-vacio {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 40px 20px !important;
+    text-align: center !important;
+    color: var(--texto-secundario) !important;
+}
+
+.texto-vacio svg {
+    margin-bottom: 12px !important;
+}
+
+.texto-vacio span {
+    font-size: 14px !important;
+}
+
+/* Botón deshabilitado */
+.cotizador-btn:disabled {
+    opacity: 0.5 !important;
+    cursor: not-allowed !important;
+    pointer-events: none !important;
+}
+
+/* ===================================
+   RESPONSIVE STEPPER
+   =================================== */
+
+@media (max-width: 768px) {
+    .cotizador-stepper {
+        padding: 20px 16px !important;
+    }
+    
+    .step-circle {
+        width: 44px !important;
+        height: 44px !important;
+    }
+    
+    .step-circle svg {
+        width: 20px !important;
+        height: 20px !important;
+    }
+    
+    .step-circle .step-number {
+        font-size: 16px !important;
+    }
+    
+    .step-label {
+        gap: 0 !important;
+    }
+    
+    .step-title {
+        font-size: 14px !important;
+    }
+    
+    .step-subtitle {
+        font-size: 11px !important;
+    }
+    
+    .step-connector {
+        flex: 0 0 60px !important;
+    }
+    
+    .step-header h3 {
+        font-size: 18px !important;
+    }
+    
+    .step-actions {
+        flex-direction: column !important;
+    }
+    
+    .resumen-header {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 12px !important;
+    }
+    
+    .btn-editar-productos {
+        width: 100% !important;
+        justify-content: center !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .cotizador-stepper {
+        padding: 16px 12px !important;
+    }
+    
+    .step-item {
+        gap: 8px !important;
+    }
+    
+    .step-circle {
+        width: 40px !important;
+        height: 40px !important;
+        border-width: 2px !important;
+    }
+    
+    .step-circle svg {
+        width: 18px !important;
+        height: 18px !important;
+    }
+    
+    .step-circle .step-number {
+        font-size: 14px !important;
+    }
+    
+    .step-label {
+        display: none !important;
+    }
+    
+    .step-connector {
+        flex: 0 0 40px !important;
+        height: 2px !important;
+    }
+    
+    .step-header {
+        margin-bottom: 16px !important;
+        padding-bottom: 12px !important;
+    }
+    
+    .step-header h3 {
+        font-size: 16px !important;
+        gap: 8px !important;
+    }
+    
+    .step-header h3 svg {
+        width: 20px !important;
+        height: 20px !important;
+    }
+    
+    .step-header p {
+        font-size: 13px !important;
+    }
+    
+    .resumen-productos-paso2 {
+        padding: 16px !important;
+    }
+    
+    .resumen-header h4 {
+        font-size: 14px !important;
+    }
+    
+    .resumen-producto-item {
+        flex-wrap: wrap !important;
+        gap: 8px !important;
+    }
+    
+    .resumen-producto-nombre {
+        width: 100% !important;
+        font-size: 13px !important;
+    }
+    
+    .resumen-producto-cantidad {
+        margin: 0 !important;
+    }
+    
+    .resumen-total {
+        font-size: 16px !important;
+        padding: 12px !important;
+    }
+}
+
+/* Animación para el cambio de pasos */
+@keyframes slideInRight {
+    from {
+        opacity: 0 !important;
+        transform: translateX(30px) !important;
+    }
+    to {
+        opacity: 1 !important;
+        transform: translateX(0) !important;
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0 !important;
+        transform: translateX(-30px) !important;
+    }
+    to {
+        opacity: 1 !important;
+        transform: translateX(0) !important;
+    }
+}
+
+.cotizador-step-content.slide-in-right {
+    animation: slideInRight 0.3s ease !important;
+}
+
+.cotizador-step-content.slide-in-left {
+    animation: slideInLeft 0.3s ease !important;
+}
